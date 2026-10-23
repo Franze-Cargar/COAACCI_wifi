@@ -2,19 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b3729">
 <title>The Only Connection You Need Is With Jesus</title>
 <meta property="og:title" content="The only connection you need is with Jesus!">
 <meta property="og:image" content="anniversary.jpg?v=3">
 <style>
-  html,body{margin:0;background:#2b3729}
-  .wrap{max-width:560px;margin:0 auto}
-  img{display:block;width:100%;height:auto}
+  html, body { margin: 0; height: 100%; background: #2b3729; overflow: hidden; }
+
+  /* Full-screen stage: centers the picture horizontally and vertically on any device */
+  .stage {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* Soft blurred copy of the same picture fills any leftover space so there are no hard bars */
+  .bg {
+    position: absolute;
+    inset: -6%;
+    background: url("anniversary.jpg?v=3") center / cover no-repeat;
+    filter: blur(28px) brightness(.92);
+  }
+
+  /* The picture keeps its proportions and shrinks to fit the screen, never cropped or stretched */
+  .pic {
+    position: relative;
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <img src="anniversary.jpg?v=3" alt="The only connection you need is with Jesus! Happy anniversary, church fam!">
-  </div>
+  <main class="stage">
+    <div class="bg" aria-hidden="true"></div>
+    <img class="pic" src="anniversary.jpg?v=3" alt="The only connection you need is with Jesus! Happy anniversary, church fam!">
+  </main>
 </body>
 </html>
