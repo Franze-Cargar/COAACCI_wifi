@@ -19,17 +19,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right)
-             env(safe-area-inset-bottom) env(safe-area-inset-left);
+    overflow: hidden;
+    background: #2b3729;
   }
 
-  /* Soft blurred copy of the same picture fills any leftover space so there are no hard bars */
-  .bg {
+  /* Wrapper hugs the picture. Its ::before continues the picture's own colours
+     (orange at the top, dark green at the bottom) above, below and beside it,
+     so there are no bars and no blur on any screen shape. */
+  .frame { position: relative; line-height: 0; }
+  .frame::before {
+    content: "";
     position: absolute;
-    inset: -6%;
-    background: url("anniversary.jpg?v=3") center / cover no-repeat;
-    filter: blur(28px) brightness(.92);
+    left: -100vw; right: -100vw; top: -100vh; bottom: -100vh;
+    background: linear-gradient(to bottom,
+      #df6b20 100vh,
+      #bd6120 calc(100vh + (100% - 200vh) * .22),
+      #915523 calc(100vh + (100% - 200vh) * .37),
+      #664824 calc(100vh + (100% - 200vh) * .52),
+      #473f28 calc(100vh + (100% - 200vh) * .67),
+      #323927 calc(100vh + (100% - 200vh) * .82),
+      #2b3729 calc(100% - 100vh));
   }
 
   /* The picture keeps its proportions and shrinks to fit the screen, never cropped or stretched */
@@ -38,16 +47,18 @@
     display: block;
     width: auto;
     height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right));
+    max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     object-fit: contain;
   }
 </style>
 </head>
 <body>
   <main class="stage">
-    <div class="bg" aria-hidden="true"></div>
-    <img class="pic" src="anniversary.jpg?v=3" alt="The only connection you need is with Jesus! Happy anniversary, church fam!">
+    <div class="frame">
+      <img class="pic" src="anniversary.jpg?v=3" alt="The only connection you need is with Jesus! Happy anniversary, church fam!">
+    </div>
   </main>
 </body>
 </html>
